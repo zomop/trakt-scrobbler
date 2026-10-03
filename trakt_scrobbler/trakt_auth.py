@@ -4,7 +4,7 @@ import time
 import webbrowser
 from datetime import datetime as dt
 from trakt_scrobbler.app_dirs import DATA_DIR
-from trakt_scrobbler import logger, trakt_key_holder
+from trakt_scrobbler import config, logger, trakt_key_holder
 from trakt_scrobbler.notifier import notify
 from trakt_scrobbler.utils import read_json, write_json, safe_request
 
@@ -17,8 +17,10 @@ class TraktAuth:
     _REFRESH_RETRIES_LIMIT = 3
 
     def __init__(self):
-        self.CLIENT_ID = trakt_key_holder.get_id()
-        self.CLIENT_SECRET = trakt_key_holder.get_secret()
+        secrets_file = config['general']['auth']['trakt_secrets_file'].get()
+        self.CLIENT_ID, self.CLIENT_SECRET = trakt_key_holder.get_credentials(
+            secrets_file
+        )
         self._token_data = {}
         self._code_fetch_fails = 0
         self._refresh_retries = 0

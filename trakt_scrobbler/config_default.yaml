@@ -22,6 +22,10 @@ general:
   allowed_scrobbles:
     episode: all  # all, stop-only, none
     movie: all  # all, stop-only, none
+  auth:
+    # Optional JSON file containing client_id and client_secret. If omitted,
+    # $DATA_DIR/trakt_secrets.json is used when present.
+    trakt_secrets_file:
 
 
 fileinfo:
